@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h4>Contacts</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card text-dark bg-light">
+                <div class="card-header p-2">Contact List</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form>
+                <div class="form-group form-inline">
+                    Filter by:
+                    <input class="form-control ml-2" type="text" name="searchTerm"
+                        (input)="search($event.target.value)" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h5>Filtered by:</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col" sortable="name">Name</th>
+                        <th scope="col" sortable="emailAddress">Email Address</th>
+                        <th scope="col" sortable="phoneNumber">Phone Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        *ngFor="let contact of contacts | listFilter: searchTerm | slice: (page-1) * pageSize : page * pageSize; index as i">
+                        <td><a href="#" [routerLink]="['/contact-details/'+contact.id]">{{ contact.name }}</a></td>
+                        <td>{{ contact.emailAddress }}</td>
+                        <td>{{ contact.phoneNumber }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [boundaryLinks]="true"
+                [pageSize]="pageSize" class="d-flex justify-content-center"></ngb-pagination>
+        </div>
+    </div>
+</div>
